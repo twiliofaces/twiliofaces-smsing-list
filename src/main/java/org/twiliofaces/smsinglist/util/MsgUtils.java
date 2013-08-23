@@ -34,8 +34,8 @@ public class MsgUtils
 
    public static String help()
    {
-      return "CMD LIST: CHANGE: new_nick_name - SUBSCRIBE: nickname - UNSUBSCRIBE, PAUSE, " +
-               "INVITE: number_to_invite - UNPAUSE, HELP, ALL, PRIV: nickname msg";
+      return "CMD LIST: CHANGE: new_nick_name - SUBSCRIBE: nickname - LEAVE, PAUSE, " +
+               "INVITE: number_to_invite - UNPAUSE, HOWTO, ALL, PRIV: nickname msg";
    }
 
    public static String bye(User user)

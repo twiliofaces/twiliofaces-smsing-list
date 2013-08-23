@@ -22,8 +22,8 @@ public class ParserUtils
          case PAUSE:
          case UNPAUSE:
          case ALL:
-         case HELP:
-         case UNSUBSCRIBE:
+         case HOWTO:
+         case LEAVE:
             if (txt.toUpperCase().trim().startsWith(cmd.name()))
                return cmd;
             break;

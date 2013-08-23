@@ -62,7 +62,7 @@ public class Analyzer
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
-         case HELP:
+         case HOWTO:
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.help(),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
@@ -93,7 +93,7 @@ public class Analyzer
          case UNPAUSE:
             userRepository.unpause(user);
             break;
-         case UNSUBSCRIBE:
+         case LEAVE:
             userRepository.unsubscribe(user);
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.bye(user),
                      msgIn.getId());
@@ -115,7 +115,7 @@ public class Analyzer
          System.out.println(commandInside);
          switch (commandInside)
          {
-         case HELP:
+         case HOWTO:
             msgInRepository.persist_withNewTx(msgIn);
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.help(),
                      msgIn.getId());
