@@ -104,6 +104,7 @@ public class Analyzer
       else
       {
          // I DON'T KNOW THE USER
+         System.out.println("NEW USER");
          CommandsEnum commandInside = ParserUtils.containsCommand(msgIn.getTxt());
          switch (commandInside)
          {
