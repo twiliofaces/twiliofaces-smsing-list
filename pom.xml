@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.twiliofaces.smsinglist</groupId>
+	<artifactId>twiliofaces-smsing-list</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.org.jboss.spec.javax.jms.jboss-jms-api_1.1_spec>1.0.0.Final</version.org.jboss.spec.javax.jms.jboss-jms-api_1.1_spec>
+		<version.org.jboss.ironjacamar>1.0.7.Final</version.org.jboss.ironjacamar>
+		<version.org.jboss.ejb3.ext-api>2.0.0</version.org.jboss.ejb3.ext-api>
+		<jboss.spec.version>1.0.1.Final</jboss.spec.version>
+		<primefaces.version>3.5</primefaces.version>
+		<stringtemplate.version>3.2</stringtemplate.version>
+	</properties>
+
+	<dependencies>
+
+		<!-- prime -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.jms</groupId>
+			<artifactId>jboss-jms-api_1.1_spec</artifactId>
+			<version>1.0.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-ext-api</artifactId>
+			<version>2.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.1.2.GA</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>org.giavacms.common</groupId>
+			<artifactId>giavacms-common-base</artifactId>
+			<version>2.0.3-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- twilio sdk -->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio-java-sdk</artifactId>
+			<version>3.3.10</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- twilio faces -->
+		<dependency>
+			<groupId>org.twiliofaces</groupId>
+			<artifactId>twiliofaces</artifactId>
+			<version>1.2.4-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- java ee api -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+	</dependencies>
+</project>
