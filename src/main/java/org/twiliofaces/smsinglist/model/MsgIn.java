@@ -73,4 +73,10 @@ public class MsgIn implements Serializable
       this.insertDate = insertDate;
    }
 
+   @Override
+   public String toString()
+   {
+      return "MsgIn [id=" + id + ", from=" + from + ", txt=" + txt + ", insertDate=" + insertDate + "]";
+   }
+
 }

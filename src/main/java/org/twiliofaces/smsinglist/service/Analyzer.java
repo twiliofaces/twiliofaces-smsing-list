@@ -1,5 +1,6 @@
 package org.twiliofaces.smsinglist.service;
 
+import java.awt.color.CMMException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class Analyzer
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          default:
-            System.out.println("ERRORE!!!!!!" + sms.toString());
+            System.out.println("ERRORE OLD USER!!!!!!" + sms.toString());
             break;
 
          }
@@ -106,6 +107,7 @@ public class Analyzer
          // I DON'T KNOW THE USER
          System.out.println("NEW USER");
          CommandsEnum commandInside = ParserUtils.containsCommand(msgIn.getTxt());
+         System.out.println(commandInside);
          switch (commandInside)
          {
          case HELP:
@@ -125,7 +127,8 @@ public class Analyzer
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          default:
-            System.out.println("ERRORE!!!!!!" + sms.toString());
+            System.out.println("ERRORE NEW USER!!!!!!" + sms.toString());
+            System.out.println("ERRORE NEW USER!!!!!!" + msgIn.toString());
             break;
          }
       }
