@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<f:view contentType="text/html" encoding="UTF-8"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:outputText escape="false"
+		value="&lt;!--[if lt IE 7 ]&gt; &lt;html class='ie ie6' lang='it'&gt; &lt;![endif]--&gt;" />
+	<h:outputText escape="false"
+		value="&lt;!--[if IE 7 ]&gt; &lt;html class='ie ie7' lang='it'&gt; &lt;![endif]--&gt;" />
+	<h:outputText escape="false"
+		value="&lt;!--[if IE 8 ]&gt; &lt;html class='ie ie8' lang='it'&gt; &lt;![endif]--&gt;" />
+
+	<h:outputText escape="false"
+		value="&lt;!--[if (gte IE 9)|!(IE)]&gt;&lt;!--&gt;" />
+	<html lang="it">
+<h:outputText escape="false" value="&lt;!--&lt;![endif]--&gt;" />
+
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sms <ui:insert name="title">
+				 - benvenuto
+		</ui:insert>
+	</title>
+	<h:outputStylesheet library="css" name="basic.css" />
+	<h:outputStylesheet library="css" name="font-awesome.css" target="head" />
+
+	<h:outputText escape="false"
+		value="&lt;!--[if IE 7 ]&gt; &lt;link rel='stylesheet' href='assets/css/font-awesome-ie7.min.css' &gt; &lt;![endif]--&gt;" />
+
+	<ui:insert name="styles">
+	</ui:insert>
+
+	<ui:insert name="metadata">
+	</ui:insert>
+</h:head>
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<h:outputText escape="false"
+	value="&lt;!--[if lt IE 9]&gt; &lt;script src='http://html5shim.googlecode.com/svn/trunk/html5.js'&gt;&lt;/script&gt; &lt;![endif]--&gt;" />
+
+<h:body>
+	<center>
+		<ui:insert name="content"></ui:insert>
+	</center>
+
+
+</h:body>
+	</html>
+</f:view>

@@ -157,4 +157,13 @@ public class Sms implements Serializable
       this.apiVersion = apiVersion;
    }
 
+   @Override
+   public String toString()
+   {
+      return "Sms [smsSid=" + smsSid + ", accountSid=" + accountSid + ", smsStatus=" + smsStatus + ", body=" + body
+               + ", toCity=" + toCity + ", toZip=" + toZip + ", toState=" + toState + ", to=" + to + ", toCountry="
+               + toCountry + ", fromCountry=" + fromCountry + ", smsMessageSid=" + smsMessageSid + ", from=" + from
+               + ", apiVersion=" + apiVersion + "]";
+   }
+
 }

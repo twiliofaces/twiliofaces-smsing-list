@@ -1,6 +1,5 @@
 package org.twiliofaces.smsinglist.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class Analyzer
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          case HELP:
-            msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.change(),
+            msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.help(),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
@@ -95,7 +94,27 @@ public class Analyzer
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
+         default:
+            System.out.println("ERRORE!!!!!!" + sms.toString());
+            break;
+
+         }
+      }
+      // NO!!!
+      else
+      {
+         // I DON'T KNOW THE USER
+         CommandsEnum commandInside = ParserUtils.containsCommand(msgIn.getTxt());
+         switch (commandInside)
+         {
+         case HELP:
+            msgInRepository.persist_withNewTx(msgIn);
+            msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.help(),
+                     msgIn.getId());
+            SendMessage2SmsSenderMDB.execute(msgOutN);
+            break;
          case SUBSCRIBE:
+            msgInRepository.persist_withNewTx(msgIn);
             // AGGIUNGO NUOVO NUMERO E INVIO MSG CONFERMA
             String nickname = ParserUtils.getNickname(sms.getBody());
             User userN = new User(sms.getFrom(), nickname);
@@ -104,12 +123,10 @@ public class Analyzer
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
+         default:
+            System.out.println("ERRORE!!!!!!" + sms.toString());
+            break;
          }
-      }
-      // NO!!!
-      else
-      {
-
       }
 
    }

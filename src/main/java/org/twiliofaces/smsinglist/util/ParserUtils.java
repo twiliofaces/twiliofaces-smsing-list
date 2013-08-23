@@ -9,19 +9,19 @@ public class ParserUtils
    public static CommandsEnum containsCommand(String txt)
    {
       // SUBSCRIBE
-      if (txt.startsWith(CommandsEnum.SUBSCRIBE.name() + DOUBLE_P))
+      if (txt.trim().startsWith(CommandsEnum.SUBSCRIBE.name() + DOUBLE_P))
          return CommandsEnum.SUBSCRIBE;
       // UNSUBSCRIBE
-      if (txt.startsWith(CommandsEnum.UNSUBSCRIBE.name()))
+      if (txt.trim().startsWith(CommandsEnum.UNSUBSCRIBE.name()))
          return CommandsEnum.UNSUBSCRIBE;
       // INVITE
-      if (txt.startsWith(CommandsEnum.INVITE.name() + DOUBLE_P))
+      if (txt.trim().startsWith(CommandsEnum.INVITE.name() + DOUBLE_P))
          return CommandsEnum.INVITE;
       // PAUSE
-      if (txt.startsWith(CommandsEnum.PAUSE.name()))
+      if (txt.trim().startsWith(CommandsEnum.PAUSE.name()))
          return CommandsEnum.PAUSE;
       // UNPAUSE
-      if (txt.startsWith(CommandsEnum.UNPAUSE.name()))
+      if (txt.trim().startsWith(CommandsEnum.UNPAUSE.name()))
          return CommandsEnum.UNPAUSE;
 
       // NONE
@@ -31,9 +31,9 @@ public class ParserUtils
    public static String getNickname(String txt)
    {
       if (txt.contains(CommandsEnum.SUBSCRIBE.name()))
-         return txt.substring(txt.indexOf(CommandsEnum.SUBSCRIBE.name() + DOUBLE_P) + 1);
+         return txt.substring(txt.trim().indexOf(CommandsEnum.SUBSCRIBE.name() + DOUBLE_P) + 1).trim();
       if (txt.contains(CommandsEnum.CHANGE.name()))
-         return txt.substring(txt.indexOf(CommandsEnum.CHANGE.name() + DOUBLE_P) + 1);
+         return txt.substring(txt.trim().indexOf(CommandsEnum.CHANGE.name() + DOUBLE_P) + 1).trim();
       return null;
    }
 }

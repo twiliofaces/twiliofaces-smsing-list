@@ -30,7 +30,7 @@ public class SendMessage2SmsSenderMDB
       {
          Context ic = new InitialContext();
          ConnectionFactory cf = (ConnectionFactory) ic.lookup("JmsXA");
-         Queue queue = (Queue) ic.lookup(AppConstants.SEND_EMAIL_Q);
+         Queue queue = (Queue) ic.lookup(AppConstants.SEND_SMS_Q);
          connection = cf.createConnection();
          session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
          MessageProducer publisher = session.createProducer(queue);

@@ -16,9 +16,9 @@ import com.twilio.sdk.TwilioRestException;
 
 @MessageDriven(name = "SmsSenderMDB", activationConfig = {
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.SEND_EMAIL_Q),
+         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.SEND_SMS_Q),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
-         @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "5"),
+         @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "20"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
 public class SmsSenderMDB implements MessageListener
