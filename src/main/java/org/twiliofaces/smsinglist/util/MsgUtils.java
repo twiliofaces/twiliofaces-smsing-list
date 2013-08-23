@@ -22,19 +22,20 @@ public class MsgUtils
       return "NICKNAME CHANGED";
    }
 
-   public static String invite()
-   {
-      return "CHOICE NICKNAME AND RESPOND WITH 'SUBSCRIBE: your_nickname'";
-   }
-
    public static String comingsoon()
    {
       return "COMING SOON!";
    }
 
+   public static String invite(String number, String nickame)
+   {
+      return nickame + " INVITE YOU! CHOICE NICKNAME AND RESPOND TO THIS SMS WITH 'SUBSCRIBE: your_nickname'";
+   }
+
    public static String help()
    {
-      return "...UUUHH..";
+      return "CMD LIST: CHANGE: new_nick_name - SUBSCRIBE: nickname - UNSUBSCRIBE, PAUSE, " +
+               "INVITE: number_to_invite - UNPAUSE, HELP, ALL, PRIV: nickname msg";
    }
 
    public static String bye(User user)

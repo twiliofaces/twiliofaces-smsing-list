@@ -1,12 +1,13 @@
 package org.twiliofaces.smsinglist.jms.operation;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.logging.Logger;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
-import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
@@ -15,6 +16,7 @@ import javax.naming.InitialContext;
 
 import org.twiliofaces.smsinglist.management.AppConstants;
 import org.twiliofaces.smsinglist.model.MsgOut;
+import org.twiliofaces.smsinglist.util.SerializeUtils;
 
 public class SendMessage2SmsSenderMDB
 {
@@ -35,8 +37,12 @@ public class SendMessage2SmsSenderMDB
          session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
          MessageProducer publisher = session.createProducer(queue);
          connection.start();
+
          MapMessage msg = session.createMapMessage();
-         msg.setObject(AppConstants.MSG_OUT, msgOut);
+         // CREO OBJ SERIALIZABLE
+
+         msg.setObject(AppConstants.MSG_OUT, SerializeUtils.serialize(msgOut));
+         publisher.send(msg);
          publisher.send(msg);
          return true;
 

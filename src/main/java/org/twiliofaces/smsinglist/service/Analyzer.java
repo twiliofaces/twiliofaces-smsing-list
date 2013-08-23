@@ -1,6 +1,5 @@
 package org.twiliofaces.smsinglist.service;
 
-import java.awt.color.CMMException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -69,7 +68,10 @@ public class Analyzer
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          case INVITE:
-            msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.comingsoon(),
+            // prendo il numero e lo invito: dicendo che è nickname che lo invita a iscriversi
+            String newNumber = ParserUtils.getInviteNumber(sms.getBody());
+            msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.invite(newNumber,
+                     user.getNickname()),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
@@ -82,6 +84,8 @@ public class Analyzer
             userRepository.pause(user);
             break;
          case PRIV:
+            // devo conoscere il nickname
+            // devo prendere il msg dopo il nickname
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.comingsoon(),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
@@ -96,7 +100,8 @@ public class Analyzer
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          default:
-            System.out.println("ERRORE OLD USER!!!!!!" + sms.toString());
+            System.out.println("ERRORE OLD USER - SMS: " + sms.toString());
+            System.out.println("ERRORE OLD USER - MSGIN: " + msgIn.toString());
             break;
 
          }
@@ -127,8 +132,8 @@ public class Analyzer
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          default:
-            System.out.println("ERRORE NEW USER!!!!!!" + sms.toString());
-            System.out.println("ERRORE NEW USER!!!!!!" + msgIn.toString());
+            System.out.println("ERRORE NEW USER - SMS: " + sms.toString());
+            System.out.println("ERRORE NEW USER - MSGIN: " + msgIn.toString());
             break;
          }
       }

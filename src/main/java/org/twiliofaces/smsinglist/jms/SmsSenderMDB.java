@@ -1,5 +1,7 @@
 package org.twiliofaces.smsinglist.jms;
 
+import java.util.List;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.inject.Inject;
@@ -12,8 +14,10 @@ import org.twiliofaces.request.TwilioSmsSender;
 import org.twiliofaces.smsinglist.management.AppConstants;
 import org.twiliofaces.smsinglist.model.MsgOut;
 import org.twiliofaces.smsinglist.repository.MsgOutRepository;
+import org.twiliofaces.smsinglist.util.SerializeUtils;
 
 import com.twilio.sdk.TwilioRestException;
+import com.twilio.sdk.resource.instance.Sms;
 
 @MessageDriven(name = "SmsSenderMDB", activationConfig = {
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
@@ -37,10 +41,14 @@ public class SmsSenderMDB implements MessageListener
       MapMessage mess = (MapMessage) message;
       try
       {
-         msgOut = (MsgOut) mess.getObject(AppConstants.MSG_OUT);
-         String sid = twilioSmsSender.setRecipients(msgOut.getNumbers()).setBody(msgOut.getTxt()).send();
-         msgOut.setSid(sid);
-         msgOutRepository.persistMultiOut(msgOut);
+         byte[] msgByte = (byte[]) mess.getObject(AppConstants.MSG_OUT);
+         msgOut = (MsgOut) SerializeUtils.deserialize(msgByte);
+         for (String to : msgOut.getNumbers())
+         {
+            String sid = twilioSmsSender.setTo(to).setBody(msgOut.getTxt()).send();
+            msgOut.setSid(sid);
+            msgOutRepository.persist(msgOut);
+         }
       }
       catch (JMSException e)
       {
