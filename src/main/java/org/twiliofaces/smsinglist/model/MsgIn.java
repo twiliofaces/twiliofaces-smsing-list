@@ -19,6 +19,17 @@ public class MsgIn implements Serializable
    private String txt;
    private Date insertDate;
 
+   public MsgIn()
+   {
+   }
+
+   public MsgIn(String from, String txt)
+   {
+      this.from = from;
+      this.txt = txt;
+      this.insertDate = new Date();
+   }
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    public Long getId()

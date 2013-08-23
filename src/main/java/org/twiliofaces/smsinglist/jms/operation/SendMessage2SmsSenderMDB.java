@@ -35,8 +35,8 @@ public class SendMessage2SmsSenderMDB
          session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
          MessageProducer publisher = session.createProducer(queue);
          connection.start();
-         Message msg = session.createMessage();
-         msg.setObjectProperty(AppConstants.MSG_OUT, msgOut);
+         MapMessage msg = session.createMapMessage();
+         msg.setObject(AppConstants.MSG_OUT, msgOut);
          publisher.send(msg);
          return true;
 

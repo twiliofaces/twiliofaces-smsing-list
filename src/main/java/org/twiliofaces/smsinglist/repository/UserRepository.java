@@ -36,7 +36,7 @@ public class UserRepository extends BaseRepository<User>
       user.setActive(false);
       return super.update(user);
    }
-   
+
    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public boolean change(User user)
    {
@@ -63,8 +63,8 @@ public class UserRepository extends BaseRepository<User>
       {
          @SuppressWarnings("unchecked")
          List<User> users = (List<User>) getEm().createQuery(
-                  "select u FROM "
-                           + User.class.getSimpleName() + " u where u.number :=NUMBER AND u.active = :ACTIVE")
+                  "select U FROM "
+                           + User.class.getSimpleName() + " U where U.number = :NUMBER AND U.active = :ACTIVE")
                   .setParameter("NUMBER", number)
                   .setParameter("ACTIVE", true)
                   .getResultList();

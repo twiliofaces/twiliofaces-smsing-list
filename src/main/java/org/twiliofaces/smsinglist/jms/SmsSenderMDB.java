@@ -4,6 +4,7 @@ import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.inject.Inject;
 import javax.jms.JMSException;
+import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
@@ -33,9 +34,10 @@ public class SmsSenderMDB implements MessageListener
    public void onMessage(Message message)
    {
       MsgOut msgOut = null;
+      MapMessage mess = (MapMessage) message;
       try
       {
-         msgOut = (MsgOut) message.getObjectProperty(AppConstants.MSG_OUT);
+         msgOut = (MsgOut) mess.getObject(AppConstants.MSG_OUT);
          String sid = twilioSmsSender.setRecipients(msgOut.getNumbers()).setBody(msgOut.getTxt()).send();
          msgOut.setSid(sid);
          msgOutRepository.persistMultiOut(msgOut);

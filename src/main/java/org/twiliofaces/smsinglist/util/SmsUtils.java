@@ -8,8 +8,7 @@ public class SmsUtils
 
    public static MsgIn toMsgIn(Sms sms)
    {
-      MsgIn msgIn = new MsgIn();
-
+      MsgIn msgIn = new MsgIn(sms.getFrom(), sms.getBody());
       return msgIn;
    }
 
