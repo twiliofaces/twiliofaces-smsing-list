@@ -64,9 +64,8 @@ public class UserRepository extends BaseRepository<User>
          @SuppressWarnings("unchecked")
          List<User> users = (List<User>) getEm().createQuery(
                   "select U FROM "
-                           + User.class.getSimpleName() + " U where U.number = :NUMBER AND U.active = :ACTIVE")
+                           + User.class.getSimpleName() + " U where U.number = :NUMBER")
                   .setParameter("NUMBER", number)
-                  .setParameter("ACTIVE", true)
                   .getResultList();
          if (users != null && users.size() == 1)
             return users.get(0);

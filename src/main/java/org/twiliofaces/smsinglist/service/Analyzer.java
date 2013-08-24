@@ -43,6 +43,7 @@ public class Analyzer
       // YES
       if (user != null)
       {
+         System.out.println("OLD USER");
          msgInRepository.persist_withNewTx(msgIn);
          // I KNOW THE USER
          CommandsEnum commandInside = ParserUtils.containsCommand(msgIn.getTxt());
@@ -77,8 +78,11 @@ public class Analyzer
             break;
          case NONE:
             List<String> numbers = userRepository.getNumbersNotIn(sms.getFrom());
-            msgOut = new MsgOut(numbers, MsgUtils.said(user, msgIn.getTxt()), msgIn.getId());
-            SendMessage2SmsSenderMDB.execute(msgOut);
+            if (numbers != null && numbers.size() > 0)
+            {
+               msgOut = new MsgOut(numbers, MsgUtils.said(user, msgIn.getTxt()), msgIn.getId());
+               SendMessage2SmsSenderMDB.execute(msgOut);
+            }
             break;
          case PAUSE:
             userRepository.pause(user);

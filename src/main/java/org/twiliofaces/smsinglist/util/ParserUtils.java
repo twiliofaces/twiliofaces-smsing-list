@@ -4,7 +4,7 @@ import org.twiliofaces.smsinglist.model.enums.CommandsEnum;
 
 public class ParserUtils
 {
-   static String DOUBLE_P = ":";
+   static String COLON = ":";
 
    public static CommandsEnum containsCommand(String txt)
    {
@@ -16,7 +16,7 @@ public class ParserUtils
          case INVITE:
          case PRIV:
          case CHANGE:
-            if (txt.toUpperCase().trim().startsWith(cmd.name() + DOUBLE_P))
+            if (txt.toUpperCase().trim().startsWith(cmd.name() + COLON))
                return cmd;
             break;
          case PAUSE:
@@ -35,20 +35,20 @@ public class ParserUtils
    public static String getInviteNumber(String txt)
    {
       return txt.substring(
-               txt.trim().indexOf(CommandsEnum.INVITE.name() + DOUBLE_P)
-                        + (CommandsEnum.INVITE.name() + DOUBLE_P).length()).trim();
+               txt.trim().indexOf(CommandsEnum.INVITE.name() + COLON)
+                        + (CommandsEnum.INVITE.name() + COLON).length()).trim();
    }
 
    public static String getNickname(String txt)
    {
       if (txt.toUpperCase().contains(CommandsEnum.SUBSCRIBE.name()))
-         return txt.substring(
-                  txt.trim().indexOf(CommandsEnum.SUBSCRIBE.name() + DOUBLE_P)
-                           + (CommandsEnum.SUBSCRIBE.name() + DOUBLE_P).length()).trim();
+         return txt.trim().substring(
+                  txt.trim().indexOf(CommandsEnum.SUBSCRIBE.name() + COLON)
+                           + (CommandsEnum.SUBSCRIBE.name() + COLON).length()).trim();
       if (txt.toUpperCase().contains(CommandsEnum.CHANGE.name()))
-         return txt.substring(
-                  txt.trim().indexOf(CommandsEnum.CHANGE.name() + DOUBLE_P)
-                           + (CommandsEnum.SUBSCRIBE.name() + DOUBLE_P).length()).trim();
+         return txt.trim().substring(
+                  txt.trim().indexOf(CommandsEnum.CHANGE.name() + COLON)
+                           + (CommandsEnum.CHANGE.name() + COLON).length()).trim();
       return null;
    }
 }
