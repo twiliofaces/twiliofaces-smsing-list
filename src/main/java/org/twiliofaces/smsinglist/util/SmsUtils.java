@@ -1,5 +1,7 @@
 package org.twiliofaces.smsinglist.util;
 
+import java.util.Date;
+
 import org.twiliofaces.smsinglist.model.MsgIn;
 import org.twiliofaces.smsinglist.model.Sms;
 
@@ -8,12 +10,22 @@ public class SmsUtils
 
    public static MsgIn toMsgIn(Sms sms)
    {
-      MsgIn msgIn = new MsgIn(sms.getFrom(), sms.getBody());
+      MsgIn msgIn = new MsgIn(sms.getFrom(), sms.getTo(), sms.getBody());
       return msgIn;
+   }
+
+   public static Sms toSms(MsgIn msgIn)
+   {
+      Sms sms = new Sms();
+      sms.setTo(msgIn.getTo());
+      sms.setFrom(msgIn.getFrom());
+      sms.setBody(msgIn.getTxt());
+      return sms;
    }
 
    public static void valorize(Sms sms, String key, String value)
    {
+      sms.setInsertDate(new Date());
       if ("SmsSid".equals(key))
       {
          sms.setSmsSid(value);

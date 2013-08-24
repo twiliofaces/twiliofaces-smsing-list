@@ -19,6 +19,7 @@ public class MsgOut implements Serializable
    private static final long serialVersionUID = 1L;
    private Long id;
    private String to;
+   private String from;
    private String txt;
    private Date insertDate;
    private Long msgInId;
@@ -44,6 +45,7 @@ public class MsgOut implements Serializable
       this.numbers = numbers;
       this.txt = txt;
       this.msgInId = msgInId;
+      this.insertDate = new Date();
    }
 
    @Id
@@ -67,6 +69,17 @@ public class MsgOut implements Serializable
    public void setTo(String to)
    {
       this.to = to;
+   }
+
+   @Column(name = "FROMNUMBER")
+   public String getFrom()
+   {
+      return from;
+   }
+
+   public void setFrom(String from)
+   {
+      this.from = from;
    }
 
    public String getTxt()

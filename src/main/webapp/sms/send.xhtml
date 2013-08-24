@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/layout/t.xhtml">
+	<ui:define name="title">
+		<h:outputText value="snd sms" />
+	</ui:define>
+	<ui:define name="content">
+
+		<br />
+		<br />
+		<h:form id="addForm">
+
+			<h:panelGrid columns="2">
+
+				<h:outputLabel value="User " for="user" />
+				<p:selectOneMenu id="user" value="#{smsController.element.from}">
+					<f:selectItems value="#{userItems}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="New User" for="newUser" />
+				<p:inputText style="width: 100%;"
+					value="#{smsController.element.from}" required="false" id="newUser">
+				</p:inputText>
+
+				<h:outputLabel value="Body (*)" for="body" />
+				<p:inputTextarea style="width: 100%;" rows="20" columns="20"
+					value="#{smsController.element.body}" required="true"
+					requiredMessage="the body is mandatary" id="body">
+				</p:inputTextarea>
+
+				<p:commandButton action="#{smsController.sendSmsReally}"
+					value="send really" ajax="false" />
+
+				<p:commandButton action="#{smsController.sendSmsInternally}"
+					value="send internally" ajax="false" />
+
+			</h:panelGrid>
+
+		</h:form>
+		<br />
+		<br />
+		<div style="clear: both;"></div>
+
+	</ui:define>
+</ui:composition>

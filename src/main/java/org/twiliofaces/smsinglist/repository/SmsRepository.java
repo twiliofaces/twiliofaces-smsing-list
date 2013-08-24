@@ -17,7 +17,7 @@ public class SmsRepository extends BaseRepository<Sms>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " smsSid ";
+      return " smsSid desc ";
    }
 
 }

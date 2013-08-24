@@ -10,6 +10,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 
 import org.jboss.ejb3.annotation.ResourceAdapter;
+import org.jboss.logging.Logger;
 import org.twiliofaces.smsinglist.model.Sms;
 import org.twiliofaces.smsinglist.repository.SmsRepository;
 import org.twiliofaces.smsinglist.service.Analyzer;
@@ -26,9 +27,11 @@ public class SmsReceiverMDB implements MessageListener
    @Inject
    SmsRepository smsRepository;
 
+   Logger logger = Logger.getLogger(getClass());
+
    public void onMessage(Message message)
    {
-      System.out.println("we received a new twilio sms message!");
+      logger.info("we received a new twilio sms message!");
       Sms sms = new Sms();
       if (message instanceof MapMessage)
       {
@@ -40,7 +43,7 @@ public class SmsReceiverMDB implements MessageListener
             {
                String key = (String) e.nextElement();
                String value = mess.getString(key);
-               System.out.println(key + ": " + value);
+               logger.info(key + ": " + value);
                SmsUtils.valorize(sms, key, value);
             }
          }

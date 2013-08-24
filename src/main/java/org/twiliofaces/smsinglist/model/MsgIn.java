@@ -16,6 +16,7 @@ public class MsgIn implements Serializable
    private static final long serialVersionUID = 1L;
    private Long id;
    private String from;
+   private String to;
    private String txt;
    private Date insertDate;
 
@@ -23,9 +24,10 @@ public class MsgIn implements Serializable
    {
    }
 
-   public MsgIn(String from, String txt)
+   public MsgIn(String from, String to, String txt)
    {
       this.from = from;
+      this.to = to;
       this.txt = txt;
       this.insertDate = new Date();
    }
@@ -51,6 +53,17 @@ public class MsgIn implements Serializable
    public void setFrom(String from)
    {
       this.from = from;
+   }
+
+   @Column(name = "TONUMBER")
+   public String getTo()
+   {
+      return to;
+   }
+
+   public void setTo(String to)
+   {
+      this.to = to;
    }
 
    public String getTxt()

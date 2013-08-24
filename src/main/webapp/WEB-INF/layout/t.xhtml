@@ -3,6 +3,7 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core">
 
@@ -21,15 +22,14 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Sms <ui:insert name="title">
+	<title>Twiiofaces Smslist <ui:insert name="title">
 				 - benvenuto
 		</ui:insert>
 	</title>
-	<h:outputStylesheet library="css" name="basic.css" />
-	<h:outputStylesheet library="css" name="font-awesome.css" target="head" />
+	<link type="text/css" rel="stylesheet" href="/css/font-awesome.css" />
 
 	<h:outputText escape="false"
-		value="&lt;!--[if IE 7 ]&gt; &lt;link rel='stylesheet' href='assets/css/font-awesome-ie7.min.css' &gt; &lt;![endif]--&gt;" />
+		value="&lt;!--[if IE 7 ]&gt; &lt;link rel='stylesheet' href='/css/font-awesome-ie7.min.css' &gt; &lt;![endif]--&gt;" />
 
 	<ui:insert name="styles">
 	</ui:insert>
@@ -43,8 +43,23 @@
 	value="&lt;!--[if lt IE 9]&gt; &lt;script src='http://html5shim.googlecode.com/svn/trunk/html5.js'&gt;&lt;/script&gt; &lt;![endif]--&gt;" />
 
 <h:body>
+
 	<center>
-		<ui:insert name="content"></ui:insert>
+		<p:panel style="width: 100%;">
+			<ui:insert name="menu">
+				<ui:include src="menu.xhtml" />
+			</ui:insert>
+
+			<p:spacer></p:spacer>
+			<ui:insert name="content"></ui:insert>
+
+			<p:spacer></p:spacer>
+			<p:panel style="width: 100%;">
+				<ui:insert name="footer">
+					<ui:include src="footer.xhtml" />
+				</ui:insert>
+			</p:panel>
+		</p:panel>
 	</center>
 
 

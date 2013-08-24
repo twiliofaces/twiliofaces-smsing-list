@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/layout/t.xhtml">
+	<ui:define name="title">
+		<h:outputText value="msgin" />
+	</ui:define>
+	<ui:define name="content">
+
+		<br />
+		<br />
+		<h:form>
+			<p:dataTable style="width: 95%;" id="list" paginator="true"
+				paginatorPosition="bottom" lazy="true" emptyMessage="no msgin."
+				rows="#{msgInController.rowsPerPage}" var="d"
+				value="#{msgInController.model}" rowIndexVar="rowIndex">
+				<p:column>
+					<center>
+						<h:outputText value="#{rowIndex+1}" />
+					</center>
+				</p:column>
+				<p:column headerText="date">
+					<h:outputText value="#{d.insertDate}">
+						<f:convertDateTime pattern="dd-MM-yyyy hh:mm:ss" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="from">
+					<center>
+						<h:outputText value="#{d.from}" />
+					</center>
+				</p:column>
+				<p:column headerText="to">
+					<center>
+						<h:outputText value="#{d.to}" />
+					</center>
+				</p:column>
+				<p:column headerText="txt">
+					<h:outputText value="#{d.txt}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+		<br />
+		<br />
+		<div style="clear: both;"></div>
+
+	</ui:define>
+</ui:composition>

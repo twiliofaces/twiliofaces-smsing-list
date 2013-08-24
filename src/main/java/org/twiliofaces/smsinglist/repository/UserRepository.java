@@ -21,7 +21,7 @@ public class UserRepository extends BaseRepository<User>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " nickname ";
+      return " nickname asc ";
    }
 
    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -66,6 +66,26 @@ public class UserRepository extends BaseRepository<User>
                   "select U FROM "
                            + User.class.getSimpleName() + " U where U.number = :NUMBER")
                   .setParameter("NUMBER", number)
+                  .getResultList();
+         if (users != null && users.size() == 1)
+            return users.get(0);
+      }
+      catch (Exception e)
+      {
+         logger.error(e.getMessage(), e);
+      }
+      return null;
+   }
+
+   public User findByNickname(String nickname)
+   {
+      try
+      {
+         @SuppressWarnings("unchecked")
+         List<User> users = (List<User>) getEm().createQuery(
+                  "select U FROM "
+                           + User.class.getSimpleName() + " U where U.nickname = :NICKNAME")
+                  .setParameter("NICKNAME", nickname)
                   .getResultList();
          if (users != null && users.size() == 1)
             return users.get(0);

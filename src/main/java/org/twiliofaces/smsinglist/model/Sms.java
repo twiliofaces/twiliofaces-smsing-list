@@ -1,6 +1,7 @@
 package org.twiliofaces.smsinglist.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Sms implements Serializable
    private String smsMessageSid;
    private String from;
    private String apiVersion;
+   private Date insertDate;
 
    @Id
    public String getSmsSid()
@@ -155,6 +157,16 @@ public class Sms implements Serializable
    public void setApiVersion(String apiVersion)
    {
       this.apiVersion = apiVersion;
+   }
+
+   public Date getInsertDate()
+   {
+      return insertDate;
+   }
+
+   public void setInsertDate(Date insertDate)
+   {
+      this.insertDate = insertDate;
    }
 
    @Override

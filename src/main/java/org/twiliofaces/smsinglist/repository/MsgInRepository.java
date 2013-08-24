@@ -19,7 +19,7 @@ public class MsgInRepository extends BaseRepository<MsgIn>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " id ";
+      return " id desc ";
    }
 
    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

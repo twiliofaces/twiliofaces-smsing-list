@@ -1,20 +1,49 @@
 package org.twiliofaces.smsinglist.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.twiliofaces.smsinglist.model.User;
-
 public class MsgUtils
 {
-   public static String said(User user, String txt)
+   public static String said(String nickname, String txt)
    {
-      return user.getNickname() + " SAID: " + txt;
+      return nickname + " SAID:" + txt;
    }
 
-   public static String welcome(User user)
+   public static String welcome(String nickname)
    {
-      return "WELCOME " + user.getNickname();
+      return "WELCOME " + nickname + "!";
+   }
+
+   public static String nicknameAlreadyUsed()
+   {
+      return "NICKNAME ALREADY USED. CHANGE IT!";
+   }
+
+   public static String alreadySubscribed()
+   {
+      return "YOU ALREADY SUBSCRIBED!";
+   }
+
+   public static String noUserWithNickname()
+   {
+      return "DON'T EXIST SUBSCRIBER WITH THIS NICKNAME ";
+   }
+
+   public static String inviteUserAlreadySubscribed()
+   {
+      return "YOUR FRIEND IS ALREADY SUBSCRIBED!";
+   }
+
+   public static String noUSers()
+   {
+      return "NO USERS IN CHAT! INVITE SOMEONE!";
+   }
+
+   public static String msgEmpty()
+   {
+      return "YOUR SMS IS EMPTY";
    }
 
    public static String change()
@@ -38,9 +67,9 @@ public class MsgUtils
                "INVITE: number_to_invite - UNPAUSE, HOWTO, ALL, PRIV: nickname msg";
    }
 
-   public static String bye(User user)
+   public static String bye(String nickname)
    {
-      return "BYE BYE " + user.getNickname();
+      return "BYE BYE " + nickname + "!";
    }
 
    public static String all(List<String> nicknames)
@@ -50,7 +79,9 @@ public class MsgUtils
 
    public static void main(String[] args)
    {
-      String[] nomi = { "fiorenzo", "mario" };
-      System.out.println(Arrays.toString(Arrays.asList(nomi).toArray()).replace("[", "").replace("]", ""));
+      List<String> nomi = new ArrayList<String>();
+      nomi.add("fiorenzino");
+      nomi.add("mario");
+      System.out.println(all(nomi));
    }
 }

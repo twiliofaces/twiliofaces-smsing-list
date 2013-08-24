@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="menu">
+
+		<p:menubar id="menuBar" style="width: 100%;">
+			<p:menuitem value="Home" url="/" />
+
+			<p:submenu label="sms">
+				<p:menuitem value="list" action="#{smsController.listPage}" />
+				<p:menuitem value="send" action="#{smsController.prepareSms}" />
+			</p:submenu>
+
+			<p:menuitem value="users" action="#{userController.listPage}" />
+
+			<p:menuitem value="msgin" action="#{msgInController.listPage}" />
+
+			<p:menuitem value="msgout" action="#{msgOutController.listPage}" />
+
+		</p:menubar>
+
+	</h:form>
+</ui:composition>

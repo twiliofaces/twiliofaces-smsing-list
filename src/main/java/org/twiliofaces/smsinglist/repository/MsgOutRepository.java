@@ -17,7 +17,7 @@ public class MsgOutRepository extends BaseRepository<MsgOut>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " id ";
+      return " id desc ";
    }
 
    public boolean persistMultiOut(MsgOut msgOut)
