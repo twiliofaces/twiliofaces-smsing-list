@@ -50,6 +50,14 @@ public class SmsController extends AbstractController<Sms>
 
    public String sendSmsInternally()
    {
+      if (getElement().getNewFrom() != null && !getElement().getNewFrom().trim().isEmpty())
+      {
+         getElement().setFrom(getElement().getNewFrom().trim());
+      }
+      if (getElement().getFrom() == null || getElement().getFrom().isEmpty())
+      {
+         return null;
+      }
       getElement().setSmsSid("SM" + System.currentTimeMillis());
       getElement().setInsertDate(new Date());
       smsRepository.persist(getElement());

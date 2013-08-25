@@ -35,11 +35,7 @@ public class SendMessage2SmsSenderMDB
          connection.start();
 
          MapMessage msg = session.createMapMessage();
-         // CREO OBJ SERIALIZABLE
-
          msg.setObject(AppConstants.MSG_OUT, SerializationUtils.serialize(msgOut));
-         // SerializeUtils.serialize(msgOut));
-         publisher.send(msg);
          publisher.send(msg);
          return true;
 

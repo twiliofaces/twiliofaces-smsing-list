@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Sms implements Serializable
@@ -23,6 +24,7 @@ public class Sms implements Serializable
    private String fromCountry;
    private String smsMessageSid;
    private String from;
+   private String newFrom;
    private String apiVersion;
    private Date insertDate;
 
@@ -167,6 +169,17 @@ public class Sms implements Serializable
    public void setInsertDate(Date insertDate)
    {
       this.insertDate = insertDate;
+   }
+
+   @Transient
+   public String getNewFrom()
+   {
+      return newFrom;
+   }
+
+   public void setNewFrom(String newFrom)
+   {
+      this.newFrom = newFrom;
    }
 
    @Override

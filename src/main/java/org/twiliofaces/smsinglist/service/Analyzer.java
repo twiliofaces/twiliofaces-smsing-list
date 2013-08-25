@@ -43,10 +43,8 @@ public class Analyzer implements Serializable
    public void checkSms(Sms sms)
    {
       MsgIn msgIn = SmsUtils.toMsgIn(sms);
-      // know i the number?
       User user = userRepository.findByNumber(sms.getFrom());
       MsgOut msgOut, msgOutN;
-      // YES
       if (user != null)
       {
 
@@ -59,25 +57,32 @@ public class Analyzer implements Serializable
             List<String> nicknames = userRepository.getAllNicknamesNotIn(sms.getFrom());
             if (nicknames != null && !nicknames.isEmpty())
             {
-               logger.info("OLD USER - ALL CMD - " + Arrays.toString(nicknames.toArray()));
+               logger.info("subscriber known - ALL CMD - " + Arrays.toString(nicknames.toArray()));
                msgOut = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.all(nicknames),
                         msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOut);
             }
             else
             {
-               logger.info("OLD USER - ALL CMD - NOUSERS");
+               logger.info("subscriber known - ALL CMD - NOUSERS");
                msgOut = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.noUSers(),
                         msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOut);
             }
+            break;
+         case WHOAMI:
+            logger.info("subscriber known - WHOAMI CMD ");
+            msgOut = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }),
+                     MsgUtils.yourNickname(user.getNickname()),
+                     msgIn.getId());
+            SendMessage2SmsSenderMDB.execute(msgOut);
             break;
          case CHANGE:
             String newNickname = ParserUtils.getNickname(sms.getBody());
             User oldUser = userRepository.findByNickname(newNickname);
             if (oldUser == null)
             {
-               logger.info("OLD USER - CHANGE CMD");
+               logger.info("subscriber known - CHANGE CMD");
                user.setNickname(newNickname);
                userRepository.change(user);
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.change(),
@@ -86,7 +91,7 @@ public class Analyzer implements Serializable
             }
             else
             {
-               logger.info("OLD USER - CHANGE CMD - NICKNAME ALREADY USED");
+               logger.info("subscriber known - CHANGE CMD - NICKNAME ALREADY USED");
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.nicknameAlreadyUsed(),
                         msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOutN);
@@ -94,19 +99,17 @@ public class Analyzer implements Serializable
             }
             break;
          case HOWTO:
-            logger.info("OLD USER - HOWTO CMD");
+            logger.info("subscriber known - HOWTO CMD");
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.help(),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          case INVITE:
-
-            // prendo il numero e lo invito: dicendo che è nickname che lo invita a iscriversi
             String newNumber = ParserUtils.getInviteNumber(sms.getBody());
             User inviteUser = userRepository.findByNumber(newNumber);
             if (inviteUser == null)
             {
-               logger.info("OLD USER - INVITE CMD");
+               logger.info("subscriber known - INVITE CMD");
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.invite(newNumber,
                         user.getNickname()),
                         msgIn.getId());
@@ -114,7 +117,7 @@ public class Analyzer implements Serializable
             }
             else
             {
-               logger.info("OLD USER - INVITE CMD - ALREADY SUBSCRIBED");
+               logger.info("subscriber known - INVITE CMD - ALREADY SUBSCRIBED");
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }),
                         MsgUtils.inviteUserAlreadySubscribed(),
                         msgIn.getId());
@@ -124,7 +127,7 @@ public class Analyzer implements Serializable
          case NONE:
             if (msgIn.getTxt() == null || msgIn.getTxt().trim().isEmpty())
             {
-               logger.info("OLD USER - NONE CMD - MSG EMPTY");
+               logger.info("subscriber known - NONE CMD - MSG EMPTY");
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.msgEmpty(),
                         msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOutN);
@@ -133,32 +136,30 @@ public class Analyzer implements Serializable
             List<String> numbers = userRepository.getNumbersNotIn(sms.getFrom());
             if (numbers != null && numbers.size() > 0)
             {
-               logger.info("OLD USER - NONE CMD");
+               logger.info("subscriber known - NONE CMD");
                msgOut = new MsgOut(numbers, MsgUtils.said(user.getNickname(), msgIn.getTxt()), msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOut);
             }
             else
             {
-               logger.info("OLD USER - NONE CMD - NO USERS");
+               logger.info("subscriber known - NONE CMD - NO USERS");
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.noUSers(),
                         msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOutN);
             }
             break;
          case PAUSE:
-            logger.info("OLD USER - PAUSE CMD");
+            logger.info("subscriber known - PAUSE CMD");
             userRepository.pause(user);
             break;
          case PRIV:
-            // devo conoscere il nickname
-            // devo prendere il msg dopo il nickname
             String[] vars = ParserUtils.getPrivateNicknameAndMsg(sms.getBody());
             if (vars != null)
             {
                User privUser = userRepository.findByNickname(vars[0]);
                if (privUser != null && privUser.isActive())
                {
-                  logger.info("OLD USER - PRIV CMD");
+                  logger.info("subscriber known - PRIV CMD");
                   msgOutN = new MsgOut(Arrays.asList(new String[] { privUser.getNumber() }), MsgUtils.said(
                            user.getNickname(),
                            vars[1]),
@@ -167,7 +168,7 @@ public class Analyzer implements Serializable
                }
                else
                {
-                  logger.info("OLD USER - PRIV CMD - NO USER WITH NICKNAME");
+                  logger.info("subscriber known - PRIV CMD - NO USER WITH NICKNAME");
                   msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.noUserWithNickname(),
                            msgIn.getId());
                   SendMessage2SmsSenderMDB.execute(msgOutN);
@@ -176,24 +177,25 @@ public class Analyzer implements Serializable
 
             break;
          case UNPAUSE:
-            logger.info("OLD USER - UNPAUSE CMD");
+            logger.info("subscriber known - UNPAUSE CMD");
             userRepository.unpause(user);
             break;
          case LEAVE:
-            logger.info("OLD USER - LEAVE CMD");
+            logger.info("subscriber known - LEAVE CMD");
             userRepository.unsubscribe(user);
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.bye(user.getNickname()),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          case SUBSCRIBE:
-            logger.info("OLD USER - SUBSCRIBE CMD");
+            logger.info("subscriber known - SUBSCRIBE CMD");
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.alreadySubscribed(),
                      msgIn.getId());
             SendMessage2SmsSenderMDB.execute(msgOutN);
             break;
          default:
-            logger.info("OLD USER - ERROR" + commandInside + " - SMS: " + sms.toString() + " " + msgIn.toString());
+            logger.info("subscriber known - ERROR" + commandInside + " - SMS: " + sms.toString() + " "
+                     + msgIn.toString());
             break;
 
          }
@@ -208,7 +210,7 @@ public class Analyzer implements Serializable
          switch (commandInside)
          {
          case HOWTO:
-            logger.info("NEW USER - HOWTO CMD");
+            logger.info("new subscriber - HOWTO CMD");
             msgInRepository.persist_withNewTx(msgIn);
             msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.help(),
                      msgIn.getId());
@@ -221,7 +223,7 @@ public class Analyzer implements Serializable
             User oldUser = userRepository.findByNickname(nickname);
             if (oldUser == null)
             {
-               logger.info("NEW USER - SUBSCRIBE CMD");
+               logger.info("new subscriber - SUBSCRIBE CMD");
                User userN = new User(sms.getFrom(), nickname);
                userRepository.persist_withNewTx(userN);
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }),
@@ -231,14 +233,15 @@ public class Analyzer implements Serializable
             }
             else
             {
-               logger.info("NEW USER - SUBSCRIBE CMD - NICKNAME ALREADY USED");
+               logger.info("new subscriber - SUBSCRIBE CMD - NICKNAME ALREADY USED");
                msgOutN = new MsgOut(Arrays.asList(new String[] { sms.getFrom() }), MsgUtils.nicknameAlreadyUsed(),
                         msgIn.getId());
                SendMessage2SmsSenderMDB.execute(msgOutN);
             }
             break;
          default:
-            logger.info("NEW USER - ERROR " + commandInside + " - SMS: " + sms.toString() + " " + msgIn.toString());
+            logger.info("new subscriber - ERROR " + commandInside + " - SMS: " + sms.toString() + " "
+                     + msgIn.toString());
             break;
          }
       }

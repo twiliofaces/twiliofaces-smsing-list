@@ -1,6 +1,5 @@
 package org.twiliofaces.smsinglist.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,6 +8,11 @@ public class MsgUtils
    public static String said(String nickname, String txt)
    {
       return nickname + " SAID:" + txt;
+   }
+
+   public static String yourNickname(String nickname)
+   {
+      return "YOUR NICKNAME IS " + nickname;
    }
 
    public static String welcome(String nickname)
@@ -64,7 +68,7 @@ public class MsgUtils
    public static String help()
    {
       return "CMD LIST: CHANGE: new_nick_name - SUBSCRIBE: nickname - LEAVE, PAUSE, " +
-               "INVITE: number_to_invite - UNPAUSE, HOWTO, ALL, PRIV: nickname msg";
+               "INVITE: number_to_invite - UNPAUSE, HOWTO, ALL, PRIV: nickname msg, WHOAMI";
    }
 
    public static String bye(String nickname)
@@ -77,11 +81,4 @@ public class MsgUtils
       return Arrays.toString(nicknames.toArray()).replace("[", "").replace("]", "");
    }
 
-   public static void main(String[] args)
-   {
-      List<String> nomi = new ArrayList<String>();
-      nomi.add("fiorenzino");
-      nomi.add("mario");
-      System.out.println(all(nomi));
-   }
 }
