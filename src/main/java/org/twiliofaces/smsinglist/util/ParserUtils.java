@@ -38,7 +38,7 @@ public class ParserUtils
 
    public static String getInviteNumber(String txt)
    {
-      Pattern pattern = Pattern.compile("(INVITE:)\\s*(.*)");
+      Pattern pattern = Pattern.compile("(INVITE:)\\s*(.*)", Pattern.CASE_INSENSITIVE);
       Matcher matcher = pattern.matcher(txt.trim());
       if (matcher.find() && matcher.groupCount() == 2)
          return matcher.group(2);
@@ -49,7 +49,7 @@ public class ParserUtils
    {
       if (txt.toUpperCase().contains(CommandsEnum.SUBSCRIBE.name()))
       {
-         Pattern pattern = Pattern.compile("(SUBSCRIBE:)\\s*(.*)");
+         Pattern pattern = Pattern.compile("(SUBSCRIBE:)\\s*(.*)", Pattern.CASE_INSENSITIVE);
          Matcher matcher = pattern.matcher(txt.trim());
          if (matcher.find() && matcher.groupCount() == 2)
             return matcher.group(2);
@@ -57,7 +57,7 @@ public class ParserUtils
       }
       else if (txt.toUpperCase().contains(CommandsEnum.CHANGE.name()))
       {
-         Pattern pattern = Pattern.compile("(CHANGE:)\\s*(.*)");
+         Pattern pattern = Pattern.compile("(CHANGE:)\\s*(.*)", Pattern.CASE_INSENSITIVE);
          Matcher matcher = pattern.matcher(txt.trim());
          if (matcher.find() && matcher.groupCount() == 2)
             return matcher.group(2);
@@ -68,14 +68,11 @@ public class ParserUtils
 
    public static String[] getPrivateNicknameAndMsg(String txt)
    {
-      String regEx = "(PRIV:)\\s*(\\S+)(.*)";
-      Pattern pattern = Pattern.compile(regEx);
+      Pattern pattern = Pattern.compile("(PRIV:)\\s*(\\S+)(.*)", Pattern.CASE_INSENSITIVE);
       Matcher matcher = pattern.matcher(txt.trim());
       if (matcher.find() && matcher.groupCount() > 2)
          return new String[] { matcher.group(2), matcher.group(3) };
       return null;
    }
 
-  
-  
 }

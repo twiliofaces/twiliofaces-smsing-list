@@ -12,6 +12,7 @@
 		<version.org.jboss.ejb3.ext-api>2.0.0</version.org.jboss.ejb3.ext-api>
 		<jboss.spec.version>1.0.1.Final</jboss.spec.version>
 		<primefaces.version>3.5</primefaces.version>
+		<junit.version>4.10</junit.version>
 		<stringtemplate.version>3.2</stringtemplate.version>
 	</properties>
 
@@ -76,6 +77,13 @@
 			<artifactId>javaee-api</artifactId>
 			<version>6.0</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 

@@ -1,45 +1,51 @@
 package org.twiliofaces.smsinglist.test;
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.twiliofaces.smsinglist.util.ParserUtils;
 
 public class ParserTest
 {
-   public static void main(String[] args)
+   @Test
+   public void nicknameTest()
    {
       String body = " SUBSCRIBE:fiorenzino asdsa ";
-      System.out.println(ParserUtils.getNickname(body));
+      assertFalse(ParserUtils.getNickname(body).equals("fiorenzino"));
 
-      body = " CHANGE:flower ";
-      System.out.println(ParserUtils.getNickname(body));
+      body = " SUBSCRIBE:fiorenzino ";
+      assertTrue(ParserUtils.getNickname(body).equals("fiorenzino"));
 
-      body = " INVITE: +393922274929 ";
-      System.out.println(ParserUtils.getInviteNumber(body));
-
-      evaluate(" PRIV:fiorenzino ciao", "(PRIV:)\\s*(\\S+)(.*)");
-      String[] res = ParserUtils.getPrivateNicknameAndMsg(" PRIV:fiorenzino ciao");
-      System.out.println(Arrays.toString(res));
-
-      evaluate(" INVITE: +3922274929", "(INVITE:)\\s*(.*)");
-      System.out.println(ParserUtils.getInviteNumber(" INVITE: +3922274929"));
+      body = " subscribe:fiorenzino ";
+      assertTrue(ParserUtils.getNickname(body).equals("fiorenzino"));
    }
 
-   private static void evaluate(String line, String regEx)
+   @Test
+   public void changeTest()
    {
-      Pattern pattern = Pattern.compile(regEx);
-      Matcher matcher = pattern.matcher(line);
-      if (matcher.find())
-      {
-         for (int i = 0; i <= matcher.groupCount(); i++)
-         {
-            System.out.println(i + ": " + matcher.group(i));
-         }
-      }
-      else
-      {
-         System.out.println("NOT FOUND: " + regEx + " IN: " + line);
-      }
+      String body = " CHANGE:flower ";
+      assertTrue(ParserUtils.getNickname(body).equals("flower"));
+
+      body = " change:flower ";
+      assertTrue(ParserUtils.getNickname(body).equals("flower"));
+   }
+
+   @Test
+   public void inviteTest()
+   {
+      String body = " INVITE: +393922274929 ";
+      assertTrue(ParserUtils.getInviteNumber(body).equals("+393922274929"));
+
+      body = " invite: +393922274929 ";
+      assertTrue(ParserUtils.getInviteNumber(body).equals("+393922274929"));
+   }
+
+   @Test
+   public void privateTest()
+   {
+      String[] res = ParserUtils.getPrivateNicknameAndMsg(" PRIV:fiorenzino ciao");
+      assertTrue(res[0].equals("fiorenzino"));
+      assertTrue(res[1].equals(" ciao"));
    }
 }
