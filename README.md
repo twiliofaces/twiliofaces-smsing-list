@@ -23,7 +23,9 @@ Below the initial list of commands:
 After the subscribe message, you will receive "WELCOME fiorenzino". after that time you can send sms to all sms-list subscribers.
 They will receive sms which start "fiorenzino SAID: " + your message.
 
-*VERY IMPORT UPDATE* CALL TO SMS, USING:
+*VERY IMPORT UPDATE* CALL TO SMS:
+
+we add the possibility to call the number and the app transform voice to txt using:
 
 - ffmpeg to decode mp3 (twilio registration url) to flac (used by google)
 - google speech to text (to convert voice to txt)
