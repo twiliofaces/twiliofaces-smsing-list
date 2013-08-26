@@ -16,10 +16,17 @@ Below the initial list of commands:
 - *INVITE* (send this text to invite someone to subscribe the sms list)   
 - *HOWTO* (send this text to receive the list of commands)    
 - *ALL* (send this text to know the list of subscribers)    
+- *WHOAMI* (send this text to know your nickname) 
+- *PRIV* (send a sms containing PRIV: nickname msg  - to send a private message to nickname) 
 
 
 After the subscribe message, you will receive "WELCOME fiorenzino". after that time you can send sms to all sms-list subscribers.
 They will receive sms which start "fiorenzino SAID: " + your message.
 
-Coming soon a "PRIV" command to send sms visible only to a single nickname, with this syntax:
-PRIV: nickname msg
+*VERY IMPORT UPDATE* CALL TO SMS, USING:
+
+- ffmpeg to decode mp3 (twilio registration url) to flac (used by google)
+- google speech to text (to convert voice to txt)
+
+
+
