@@ -23,7 +23,7 @@ Below the initial list of commands:
 After the subscribe message, you will receive "WELCOME fiorenzino". after that time you can send sms to all sms-list subscribers.
 They will receive sms which start "fiorenzino SAID: " + your message.
 
-*VERY IMPORT UPDATE* CALL TO SMS:
+*VERY IMPORT UPDATE* -  CALL TO SMS
 
 we add the possibility to call the number and the app transform voice to txt using:
 
