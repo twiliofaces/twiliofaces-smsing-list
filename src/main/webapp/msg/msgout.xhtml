@@ -24,7 +24,8 @@
 				<p:column headerText="date">
 					<center>
 						<h:outputText value="#{d.insertDate}">
-							<f:convertDateTime pattern="dd-MM-yyyy hh:mm:ss" />
+							<f:convertDateTime pattern="dd-MM-yyyy hh:mm:ss"
+								timeZone="Europe/Rome" />
 						</h:outputText>
 					</center>
 				</p:column>

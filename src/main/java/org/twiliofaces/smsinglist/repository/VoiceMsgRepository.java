@@ -6,26 +6,32 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Named;
 
-import org.twiliofaces.smsinglist.model.Sms;
+import org.twiliofaces.smsinglist.model.VoiceMsg;
 import org.twiliofaces.smsinglist.repository.api.BaseRepository;
 
 @Named
 @Stateless
 @LocalBean
-public class SmsRepository extends BaseRepository<Sms>
+public class VoiceMsgRepository extends BaseRepository<VoiceMsg>
 {
    private static final long serialVersionUID = 1L;
 
    @Override
    protected String getDefaultOrderBy()
    {
-      return " smsSid desc ";
+      return " id desc ";
    }
 
    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-   public Sms persist_withNewTx(Sms object)
+   public VoiceMsg persist_withNewTx(VoiceMsg object)
    {
       return super.persist(object);
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public boolean update_withNewTx(VoiceMsg object)
+   {
+      return super.update(object);
    }
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ Copyright 2013 twiliofaces.org. ~ ~ Licensed under the Eclipse Public 
+	License version 1.0, available at ~ http://www.eclipse.org/legal/epl-v10.html -->
+<f:view xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:tf="http://twiliofaces.org/twiliofaces">
+	<c:choose>
+		<c:when test="#{not callController.known}">
+			<tf:response>
+				<tf:hangup />
+			</tf:response>
+		</c:when>
+		<c:otherwise>
+			<tf:response>
+				<tf:gather action="registerMsg.twiml" method="POST" numDigits="1">
+					<tf:say value="#{callController.languageQuestion}" voice="alice"
+						language="en" />
+				</tf:gather>
+				<tf:say value="#{callController.byeMessage}" />
+			</tf:response>
+		</c:otherwise>
+	</c:choose>
+
+</f:view>

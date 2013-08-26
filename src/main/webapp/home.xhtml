@@ -12,7 +12,7 @@
 		<br />
 		<br />
 		<h:form>
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
 					rendered="#{msgInController.clear}">
@@ -92,6 +92,26 @@
 							<br />
 							<h:commandLink action="#{smsController.prepareSms}">
 								<h:outputText value="send sms" />
+							</h:commandLink>
+						</h:panelGroup>
+					</h:panelGrid>
+					<br />
+				</p:panel>
+
+				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
+					rendered="#{voiceMsgController.clear}">
+					<f:facet name="header">
+						<h:outputText value="voice msg" />
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="icon-play"></i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{voiceMsgController.listPage}">
+								<h:outputText value="list" />
 							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>

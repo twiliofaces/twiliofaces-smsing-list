@@ -49,7 +49,8 @@
 
 				<p:column headerText="date">
 					<h:outputText value="#{d.insertDate}">
-						<f:convertDateTime pattern="dd-MM-yyyy hh:mm:ss" />
+						<f:convertDateTime pattern="dd-MM-yyyy hh:mm:ss"
+							timeZone="Europe/Rome" />
 					</h:outputText>
 				</p:column>
 			</p:dataTable>

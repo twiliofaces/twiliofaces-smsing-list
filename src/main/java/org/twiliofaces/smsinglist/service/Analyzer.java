@@ -1,7 +1,10 @@
 package org.twiliofaces.smsinglist.service;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Asynchronous;
@@ -11,18 +14,28 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
+import org.giavacms.common.util.FileUtils;
 import org.jboss.logging.Logger;
 import org.twiliofaces.smsinglist.jms.operation.SendMessage2SmsSenderMDB;
+import org.twiliofaces.smsinglist.management.AppConstants;
 import org.twiliofaces.smsinglist.model.MsgIn;
 import org.twiliofaces.smsinglist.model.MsgOut;
 import org.twiliofaces.smsinglist.model.Sms;
 import org.twiliofaces.smsinglist.model.User;
+import org.twiliofaces.smsinglist.model.VoiceMsg;
 import org.twiliofaces.smsinglist.model.enums.CommandsEnum;
 import org.twiliofaces.smsinglist.repository.MsgInRepository;
+import org.twiliofaces.smsinglist.repository.SmsRepository;
 import org.twiliofaces.smsinglist.repository.UserRepository;
+import org.twiliofaces.smsinglist.repository.VoiceMsgRepository;
+import org.twiliofaces.smsinglist.util.GoogleResponseDecoder;
+import org.twiliofaces.smsinglist.util.Mp3ToFlacDecoder;
 import org.twiliofaces.smsinglist.util.MsgUtils;
 import org.twiliofaces.smsinglist.util.ParserUtils;
 import org.twiliofaces.smsinglist.util.SmsUtils;
+import org.twiliofaces.smsinglist.util.SpeechRequestor;
+import org.twiliofaces.smsinglist.util.TwilioMp3Downloader;
+import org.twiliofaces.smsinglist.util.google.SpeechResponse;
 
 @Stateless
 @LocalBean
@@ -35,6 +48,12 @@ public class Analyzer implements Serializable
 
    @Inject
    MsgInRepository msgInRepository;
+
+   @Inject
+   VoiceMsgRepository voiceMsgRepository;
+
+   @Inject
+   SmsRepository smsRepository;
 
    Logger logger = Logger.getLogger(getClass());
 
@@ -244,6 +263,59 @@ public class Analyzer implements Serializable
                      + msgIn.toString());
             break;
          }
+      }
+
+   }
+
+   @Asynchronous
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public void voice2sms(VoiceMsg voiceMsg)
+   {
+      voiceMsgRepository.persist_withNewTx(voiceMsg);
+      String origin = System.getenv(AppConstants.DATA_FOLDER_PROPERTY)
+               + "/" + AppConstants.AUDIO_FOLDER + "/" + voiceMsg.getId() + ".mp3";
+      String destination = System.getenv(AppConstants.DATA_FOLDER_PROPERTY)
+               + "/" + AppConstants.AUDIO_FOLDER + "/" + voiceMsg.getId() + ".flac";
+      String flacCommand = System.getenv(AppConstants.DATA_FOLDER_PROPERTY)
+               + "/" + AppConstants.AUDIO_FOLDER + AppConstants.FFMPEG_CMD;
+
+      // download mp3 - convert to flac - speech to text - persiste voiceMsg and delete audio files
+      try
+      {
+         TwilioMp3Downloader.execute(voiceMsg.getRecordingUrl(), origin);
+         Mp3ToFlacDecoder.execute(flacCommand, origin, destination);
+         String response = SpeechRequestor.execute(voiceMsg.getTwilioLang(), 1, destination);
+         SpeechResponse speechResponse = GoogleResponseDecoder.execute(response, true);
+         if (speechResponse.getStatus() == 0 && speechResponse.getHypotheses() != null
+                  && speechResponse.getHypotheses().size() > 0)
+         {
+            String txt = speechResponse.getHypotheses().get(0).getUtterance();
+            voiceMsg.setTxt(txt);
+            voiceMsgRepository.update_withNewTx(voiceMsg);
+            Sms sms = new Sms();
+            sms.setFrom(voiceMsg.getFrom());
+            sms.setTo(voiceMsg.getTo());
+            sms.setBody(voiceMsg.getTxt());
+            sms.setInsertDate(new Date());
+            sms.setSmsSid("SM" + System.currentTimeMillis());
+            smsRepository.persist_withNewTx(sms);
+            checkSms(sms);
+         }
+         FileUtils.deleteQuietly(origin);
+         FileUtils.deleteQuietly(destination);
+
+      }
+      catch (MalformedURLException e)
+      {
+         e.printStackTrace();
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
       }
 
    }

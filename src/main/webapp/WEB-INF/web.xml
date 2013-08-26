@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ Copyright 2013 twiliofaces.org. ~ ~ Licensed under the Eclipse Public 
+	License version 1.0, available at ~ http://www.eclipse.org/legal/epl-v10.html -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>7200</session-timeout>
+	</session-config>
+	<servlet>
+		<servlet-name>NettyTunnelingServlet</servlet-name>
+		<servlet-class>org.jboss.netty.channel.socket.http.HttpTunnelingServlet</servlet-class>
+		<!-- The name of the channel, this should be a registered local channel. 
+			See LocalTransportRegister. -->
+		<init-param>
+			<param-name>endpoint</param-name>
+			<param-value>local:0.0.0.0</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>NettyTunnelingServlet</servlet-name>
+		<url-pattern>/tunnel</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>TWILIO_SID</param-name>
+		<param-value>AC2999a90e54ebe0bdab34fab15f241040</param-value>
+	</context-param>
+	<context-param>
+		<param-name>TWILIO_TOKEN</param-name>
+		<param-value>e64ab5aad9596459bed149a29fcb22fa</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>TWILIO_NUMBER</param-name>
+		<param-value>19175515401</param-value>
+	</context-param>
+	<context-param>
+		<param-name>APPLICATION_SID</param-name>
+		<param-value>AP182b34c7d1b646f8bbf00a6a135e949e</param-value>
+	</context-param>
+</web-app>
