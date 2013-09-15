@@ -55,13 +55,6 @@
 			<version>2.0.3-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- twilio sdk -->
-		<dependency>
-			<groupId>com.twilio.sdk</groupId>
-			<artifactId>twilio-java-sdk</artifactId>
-			<version>3.3.10</version>
-			<scope>compile</scope>
-		</dependency>
 
 		<!-- twilio faces -->
 		<dependency>

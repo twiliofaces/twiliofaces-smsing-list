@@ -16,7 +16,7 @@ import org.twiliofaces.smsinglist.repository.SmsRepository;
 import org.twiliofaces.smsinglist.service.Analyzer;
 import org.twiliofaces.smsinglist.util.SmsUtils;
 
-@ResourceAdapter("twilio-sms-ra-0.0.1-SNAPSHOT.rar")
+@ResourceAdapter("twiliofaces-sms-ra-0.0.1-SNAPSHOT.rar")
 @MessageDriven
 public class SmsReceiverMDB implements MessageListener
 {
